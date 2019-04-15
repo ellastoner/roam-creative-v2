@@ -81,16 +81,14 @@ var context = {
     ]
 };
 
-
-
 var behanceId;
 var chosenPerson;
 
 
 $(document).ready(function(){
-    $('.slide-me').slick({
+    $('.slick-me').slick({
         infinite: true,
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 1,
         centerPadding: '60px',
         arrows: true,
@@ -99,76 +97,53 @@ $(document).ready(function(){
   });
 
 
-
 $(document).ready(function(){
     loadTeam();
     boxChosen();
-
+    loadProject();
   });
 
 
 function boxChosen() {
 
+    $('.pop').toggle();
 
-    
-    
+    $('.box').click(function() {
 
-$('.pop').toggle();
+       
 
-$('.box').click(function() {
-
-    $(document).ready(function(){
-        $('.slide-me').slick({
-            infinite: true,
-            slidesToShow: 4,
-            slidesToScroll: 1,
-            centerPadding: '60px',
-            arrows: true,
-            speed: 300
-        });
-      });
-
-    //Pulls what selected json file is on 
-    behanceId = $(this).attr('id');
-    console.log('This is the id: ' + behanceId);
-
-
+//Pulls what selected json file is on 
+behanceId = $(this).attr('id');
+console.log('This is the id: ' + behanceId);
 var key = 'fkOE3sH1NEIOhZxVIonTECAglYkOASai';	
 var urlProjects = 'https://api.behance.net/v2/users/' + behanceId + '/projects?client_id=' + key;
-
 // var urlUserProjects = 'https://api.behance.net/v2/users/' + behanceUser + '/';
 // var urlSelectedProject = 'http://www.behance.net/v2/projects/' + projectId + '?' + key;
 
 
-
 // AJAX request for PROJECT INFO
 $.ajax({
-
     url: urlProjects,
     dataType: 'jsonp',
-
     // when the ajax request is complete do all of these things
     success: function(res) {
-        var project = res.project;
+        
+        var project = res.projects;
 
         console.log(res);
         console.log(res.projects);
         console.log(behanceId);
         console.log('this is what I have pulled from the API' + urlProjects);
+        loadProject(res);
 
-        res.projects.forEach(function(project) {
-
-
-
-
-           
-       
-            // $('<div class="project"' + '<img src="' + project.covers.original + '"' + '<a href="project.html?id=' + project.id + '">See more</a></div>').appendTo('.project-box');
-        });
-
+        // loadProjects();
+        // res.projects.forEach(function(project) {
+        //     // $('<li>' + '<h4>' + project.name + '</h4>' + '<img src="' + project.covers.original + '"><a href="project.html?id=' + project.id + '">See more</a></li>').appendTo('ul.projects');
+        // });
+    
     }
+});
 
-    });
 
     //emptys the innerhtml
     $('.designer-name').empty();
@@ -196,15 +171,17 @@ $.ajax({
     $('.designer-name').append(firstName);
     $('.designer-position').append(chosenPosition);
     $('.pop-up').css('background-image', 'url(' + chosenImg + ')');
-    
-    
-  });
 
+});
+
+    //Takes user back to designers
   $('.back').click(function() {
     $('.pop').toggle()
   });
 
+
 };
+
 
 
 function loadTeam() {
@@ -223,4 +200,56 @@ function loadTeam() {
 
 
 
+function loadProject() {
 
+    var template1 = document.getElementById('htmltemp').innerHTML;
+   
+    // compile it with Template7
+    var compiledTemplate1 = Template7.compile(template1);
+
+    // Now we may render our compiled template by passing required context
+   
+    var json_data_html1 = compiledTemplate1(res);
+    $('#pop-wrap').html(json_data_html1);
+
+};
+
+
+// ================================== PROJECT PAGE TEMPLATE ====================================================================
+
+	// If the ID #project has been rendered on the page, then run this code
+	if($('#project').length > 0) {
+ 
+		var pageURL = new URL(document.location);
+        var params = pageURL.searchParams;
+        var key = 'SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH';	// Your unique key - https://www.behance.net/dev
+		var id = params.get('id');
+		var urlProject = 'http://www.behance.net/v2/projects/' + id + '?api_key=' + key;
+
+		// AJAX request
+		$.ajax({
+
+			url: urlProject,
+			dataType: 'jsonp',
+
+
+			// when the ajax request is complete do all of these things
+			success: function(res) {
+
+				console.log(res);
+
+				var project = res.project;
+
+				// show the project details like this
+				$('<h1>' + project.name +'</h1>').appendTo('.container');
+				$('<p>' + project.description + '</p>').appendTo('.container');
+				// // using Moment JS for clean and easy to use time format
+				// https://momentjs.com/docs/#/displaying/fromnow/
+				// https://momentjs.com/docs/#/displaying/unix-timestamp/
+				$('<h3>' + '<small>published:</small>' + moment.unix(project.published_on).fromNow() + '</h3>').appendTo('.container');
+				$('<img src="' + project.covers.original + '">').appendTo('.container');
+			}
+		});
+
+	}
+	
