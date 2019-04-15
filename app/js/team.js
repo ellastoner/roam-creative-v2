@@ -182,8 +182,6 @@ $.ajax({
 
 };
 
-
-
 function loadTeam() {
 
     var template = document.getElementById('html_template').innerHTML;
@@ -198,12 +196,11 @@ function loadTeam() {
 };
 
 
-
-
-function loadProject() {
+function loadProject(res) {
 
     var template1 = document.getElementById('htmltemp').innerHTML;
-   
+
+
     // compile it with Template7
     var compiledTemplate1 = Template7.compile(template1);
 
@@ -231,7 +228,6 @@ function loadProject() {
 
 			url: urlProject,
 			dataType: 'jsonp',
-
 
 			// when the ajax request is complete do all of these things
 			success: function(res) {
