@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- <base href="/"> -->
+	<link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
+	
+	<!-- <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/> -->
+	<title>Ella's Behance</title>
+</head>
+<body>
+
+	<!-- POP UP 01 -->
+		<div class="container-fluid pop">
+
+			<div class="pop-up" style="background-image: url('img/04.jpg')">
+				<div class="gradient">
+					<div class="text-light back">back to people</div>
+				<ul class="text-container text-baseline d-flex flex-column justify-content-end">
+					<h1 class="designer-name display-1 text-light pl-3"><span class="first-name"></span> <span class="last-name"></span></h1>
+					<p class="designer-position text-light pl-4"></p>
+
+					<div class="project-box">
+
+						
+						</div> 
+
+
+
+					
+					
+
+
+
+
+						<div class="slide-me">
+							
+								
+										
+							</div> <!-- End of slide-me container -->
+						</div> <!-- End of slider container -->
+					</div>	<!-- End of text-container for pop-up -->
+				</div> <!-- End of gradient container -->
+			</div> <!-- End of pop-up container -->
+		</div> 
+
+		<!-- END OF POP UP 01 -->
+
+	
+	<div class="container-fluid home" id="content_wrap">
+	   <script id="html_template" type="text/template7">
+		<h1 class="display-1"> Our People</h1>
+		<div class="container-fluid grid d-flex flex-row justify-content-between flex-wrap mt-5">
+				
+					{{#each people}}
+						      <div class="mt-4">
+						     <div class="box {{id}} {{img}} {{name}} {{position}}" id="{{id}}" data-nr='{{@index}}' style="background-image:url('{{img}}');">
+							</div>
+						<p class="text-light mb-0 text-center"> {{name}}</p>
+						<p class="text-light  text-center"> {{position}}</p>
+						</div>
+					{{/each}}
+        </script>
+	  </div>
+
+
+	
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/template7/1.4.1/template7.min.js"></script>
+	<script type="text/javascript" src="../slick/slick.min.js"></script>	
+	<script src="js/team.js"></script>
+	
+</body>
+</html>
+
+
+
+
+
+
+ <!-- $.ajax({
+	    url: urlProjects,
+	    success: function(res){
+	     console.log(res);
+	     projects = res.photos;
+	     }
+	 }); -->
