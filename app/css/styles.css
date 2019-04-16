@@ -1,7 +1,9 @@
 body {
     background-color: blue;
     font-family: 'Roboto', sans-serif;
+    
 }
+
 
 .home {
     /* background-color: red; */
@@ -25,6 +27,49 @@ body {
 
 }
 
+iframe {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.project-container{
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+  
+}
+
+.project-image{
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+}
+
+.details-container{
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.project-details{
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+}
+
+.project-stats{
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+
+  
+}
+
+.icon-stats{
+    width: 3vh;
+}
 
 
 .box2{

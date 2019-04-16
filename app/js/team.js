@@ -91,19 +91,6 @@ var context = {
 var behanceId;
 var chosenPerson;
 
-
-$(document).ready(function(){
-    $('.slick-me').slick({
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        centerPadding: '60px',
-        arrows: true,
-        speed: 300
-    });
-  });
-
-
 $(document).ready(function(){
     loadTeam();
     boxChosen();
@@ -114,10 +101,8 @@ $(document).ready(function(){
 function boxChosen() {
 
     $('.pop').toggle();
-
     $('.box').click(function() {
-
-        $('.grid-1').empty();
+    $('.grid-1').empty();
 
        
 
@@ -149,12 +134,6 @@ $.ajax({
 
             $('<div class="mt-4 p-2"><a href="project.html?id=' + project.id + '"><div class="box2" style="background-image:url(\'' + project.covers.original + '\');"></div><p class="text-light mb-0 text-center">' + project.name + 
             '</p></div></a>').appendTo('.grid-1');
-
-
-
-
-            // $('<div class="mt-4"><a href="project.html?id=' + project.id + '"><div class="box" id="" style="background-image:url("'+ project.covers.original +'");></div><p class="text-light mb-0 text-center">' + project.name + 
-            // '</p></div></a>').appendTo('.grid-1');
         });
     
     }
@@ -212,32 +191,24 @@ function loadTeam() {
 };
 
 
-// function loadProject(res) {
-
-//     var template1 = document.getElementById('htmltemp').innerHTML;
-
-
-//     // compile it with Template7
-//     var compiledTemplate1 = Template7.compile(template1);
-
-//     // Now we may render our compiled template by passing required context
-   
-//     var json_data_html1 = compiledTemplate1(res);
-//     $('#pop-wrap').html(json_data_html1);
-
-// };
 
 
 // ================================== PROJECT PAGE TEMPLATE ====================================================================
 
 	// If the ID #project has been rendered on the page, then run this code
 	if($('#project').length > 0) {
+
+        
+        $('.back-to-people').click(function() {
+            $('.pop').toggle()
+          });
  
 		var pageURL = new URL(document.location);
         var params = pageURL.searchParams;
         var key = 'SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH';	// Your unique key - https://www.behance.net/dev
 		var id = params.get('id');
-		var urlProject = 'http://www.behance.net/v2/projects/' + id + '?api_key=' + key;
+        var urlProject = 'http://www.behance.net/v2/projects/' + id + '?api_key=' + key;
+
 
 		// AJAX request
 		$.ajax({
@@ -250,18 +221,37 @@ function loadTeam() {
 
 				console.log(res);
 
-				var project = res.project;
+            var project = res.project;
+            let modules = res.project.modules;
+            let numberOfModules = modules.length;
 
-				// show the project details like this
-				$('<h1>' + project.name +'</h1>').appendTo('.container');
-				$('<p>' + project.description + '</p>').appendTo('.container');
+            // show the project details like this
+
+            $('<h1 class="display-1 text-light text-center">' + project.name +'</h1>').appendTo('.project-name');
+				$('<p class="text-light text-center">' + project.description + '</p>').appendTo('.project-details');
 				// // using Moment JS for clean and easy to use time format
 				// https://momentjs.com/docs/#/displaying/fromnow/
 				// https://momentjs.com/docs/#/displaying/unix-timestamp/
-				$('<h3>' + '<small>published:</small>' + moment.unix(project.published_on).fromNow() + '</h3>').appendTo('.container');
-				$('<img src="' + project.covers.original + '">').appendTo('.container');
-			}
-		});
+                $('<div><h3 class="text-light text-center">' + '<img class="icon-stats mr-2 mb-2" src="img/time.svg">' + moment.unix(project.published_on).fromNow() + '</h3>').appendTo('.project-stats');
+                $('<div><h3 class="text-light text-center">' + '<img class="icon-stats mr-2 mb-2" src="img/like.svg">' + project.stats.appreciations + '</h3></div>').appendTo('.project-stats');
+                $('<div><h3 class="text-light text-center">' + '<img class="icon-stats mr-2 mb-2" src="img/eye.svg">' + project.stats.views + '</h3></div>').appendTo('.project-stats');
+                $('<div><h3 class="text-light text-center">' + '<img class="icon-stats mr-2 mb-2" src="img/comment.svg">' + project.stats.comments + '</h3></div>').appendTo('.project-stats');
+   
 
-	}
-	
+            for (let i = 0; i < numberOfModules; i++) {
+                if (modules[i].type === 'image' && modules[i].sizes.max_1920 != undefined) {
+                    $('<div><img class="project-image" src="' + modules[i].sizes.max_1920 + '"></div>').appendTo('.project-container');
+                } else if (modules[i].type === 'image' && modules[i].sizes.max_1240 != undefined) {
+                    $('<div><img class="project-image" src="' + modules[i].sizes.max_1240 + '"></div>').appendTo('.project-container');
+                } else if (modules[i].type === 'image' && modules[i].sizes.original != undefined) {
+                    $('<div><img class="project-image" src="' + modules[i].sizes.original + '"></div>').appendTo('.project-container');
+                } else if (modules[i].type === 'embed') {
+                    $(modules[i].embed).appendTo('.project-container');
+                }
+            
+                    
+                }
+            }
+        }); // ajax ends 
+
+            };
