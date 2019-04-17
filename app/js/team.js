@@ -97,23 +97,16 @@ $(document).ready(function(){
 
   });
 
-
 function boxChosen() {
-
     $('.pop').toggle();
     $('.box').click(function() {
     $('.grid-1').empty();
-
-       
 
 //Pulls what selected json file is on 
 behanceId = $(this).attr('id');
 console.log('This is the id: ' + behanceId);
 var key = 'fkOE3sH1NEIOhZxVIonTECAglYkOASai';	
 var urlProjects = 'https://api.behance.net/v2/users/' + behanceId + '/projects?client_id=' + key;
-// var urlUserProjects = 'https://api.behance.net/v2/users/' + behanceUser + '/';
-// var urlSelectedProject = 'http://www.behance.net/v2/projects/' + projectId + '?' + key;
-
 
 // AJAX request for PROJECT INFO
 $.ajax({
@@ -121,24 +114,18 @@ $.ajax({
     dataType: 'jsonp',
     // when the ajax request is complete do all of these things
     success: function(res) {
-        
         var project = res.projects;
-
         console.log(res);
         console.log(res.projects);
         console.log(behanceId);
         console.log('this is what I have pulled from the API' + urlProjects);
-
-
         res.projects.forEach(function(project) {
-
             $('<div class="mt-4 p-2"><a href="project.html?id=' + project.id + '"><div class="box2" style="background-image:url(\'' + project.covers.original + '\');"></div><p class="text-light mb-0 text-center">' + project.name + 
             '</p></div></a>').appendTo('.grid-1');
         });
     
     }
 });
-
 
     //emptys the innerhtml
     $('.designer-name').empty();
@@ -193,7 +180,7 @@ function loadTeam() {
 
 
 
-// ================================== PROJECT PAGE TEMPLATE ====================================================================
+// ================================== INDIVIDUAL PROJECT AND STATS LOGIC BEGINS ====================================================================
 
 	// If the ID #project has been rendered on the page, then run this code
 	if($('#project').length > 0) {
