@@ -1,18 +1,16 @@
-// 'use strict';
+'use strict';
  
-// var gulp = require('gulp');
-// var sass = require('gulp-sass');
+var gulp = require('gulp');
+var sass = require('gulp-sass');
  
-// sass.compiler = require('node-sass');
+sass.compiler = require('node-sass');
  
-
-
-// gulp.task(‘sass’, function(){
-//     return gulp.src(‘app/scss/app.scss’)
-//     .pipe(sass().on(‘error’, sass.logError))
-//     .pipe(gulp.dest(‘./css’));
-//     });
+gulp.task('sass', function () {
+  return gulp.src('./css/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./css'));
+});
  
-//     gulp.task(‘sass:watch’, function(){
-//     gulp.watch(‘app/scss/app.scss’, [‘sass’]);
-//    });
+gulp.task('sass:watch', function () {
+  gulp.watch('./css/*.scss', gulp.series('sass'));
+});
